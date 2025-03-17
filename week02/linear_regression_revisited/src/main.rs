@@ -17,6 +17,8 @@ fn main() {
     let mut linreg = LinearRegression::new();
     let mut w0 = vec![0f64; trial];
     let mut w1 = vec![0f64; trial];
+    let mut wp0 = vec![0f64; trial];
+    let mut wp1 = vec![0f64; trial];
     let mut loss = vec![0f64; trial];
     loss[0] = linreg.map(&x).zip_with(|y, y_hat| (y - y_hat).powi(2), &y).mean();
 
@@ -24,6 +26,8 @@ fn main() {
         linreg.gradient_descent(&x, &y, eta);
         w0[i] = linreg.w0;
         w1[i] = linreg.w1;
+        wp0[i] = linreg.wp0;
+        wp1[i] = linreg.wp1;
         loss[i] = linreg.map(&x).zip_with(|y, y_hat| (y - y_hat).powi(2), &y).mean();
     }
 
@@ -36,6 +40,8 @@ fn main() {
     let mut df = DataFrame::new(vec![]);
     df.push("w0", Series::new(w0));
     df.push("w1", Series::new(w1));
+    df.push("wp0", Series::new(wp0));
+    df.push("wp1", Series::new(wp1));
     df.push("loss", Series::new(loss));
     df.print();
     df.write_parquet(&format!("results/linreg_{}_{}.parquet", trial, eta), CompressionOptions::Snappy).unwrap();
@@ -45,6 +51,8 @@ fn main() {
 struct LinearRegression {
     w0: f64,
     w1: f64,
+    wp0: f64,
+    wp1: f64,
 }
 
 impl LinearRegression {
@@ -52,11 +60,13 @@ impl LinearRegression {
         LinearRegression {
             w0: 0.0,
             w1: 0.0,
+            wp0: 0.0,
+            wp1: 0.0,
         }
     }
 
     fn map(&self, x: &[f64]) -> Vec<f64> {
-        x.iter().map(|&x| self.w0 + self.w1 * x).collect()
+        x.iter().map(|&x| self.wp1 * sigmoid(self.w1 * x + self.w0) + self.wp0).collect()
     }
 
     #[allow(non_snake_case)]
@@ -66,14 +76,26 @@ impl LinearRegression {
 
         let mut dLdw0 = 0f64;
         let mut dLdw1 = 0f64;
+        let mut dLdwp0 = 0f64;
+        let mut dLdwp1 = 0f64;
 
         for i in 0..x.len() {
             let error = y_hat[i] - y[i];
-            dLdw0 += 2.0 * error;
-            dLdw1 += 2.0 * error * x[i];
+            let h = sigmoid(self.w1 * x[i] + self.w0);
+            dLdwp0 += 2.0 * error;
+            dLdwp1 += 2.0 * error * h;
+            let dLdh = 2.0 * error * self.wp1;
+            dLdw0 += dLdh * h * (1.0 - h);
+            dLdw1 += dLdh * x[i] * h * (1.0 - h);
         }
 
         self.w0 -= eta * dLdw0 / N;
         self.w1 -= eta * dLdw1 / N;
+        self.wp0 -= eta * dLdwp0 / N;
+        self.wp1 -= eta * dLdwp1 / N;
     }
+}
+
+pub fn sigmoid(x: f64) -> f64 {
+    1.0 / (1.0 + (-x).exp())
 }
