@@ -55,7 +55,7 @@ print(loss)
 
 # Set Hyperparameters
 lr = 0.1
-epochs = 1000
+epochs = 3000
 
 # Train Model
 optimizer = SGD(model.parameters(), lr=lr)
@@ -76,6 +76,7 @@ with plt.style.context(["science", "nature"]):
     ax.plot(loss_vec)
     ax.set_xlabel("Epoch")
     ax.set_ylabel("Loss")
+    ax.set_yscale("log")
     ax.autoscale(tight=True)
     fig.savefig("mlp_loss.png", dpi=600, bbox_inches="tight")
 
