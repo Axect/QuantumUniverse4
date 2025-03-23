@@ -2,6 +2,7 @@ import torch
 from torch import nn
 from torch.nn import functional as F
 from torch.optim import SGD
+from torch.utils.data import TensorDataset, DataLoader
 import matplotlib.pyplot as plt
 import scienceplots
 import argparse
@@ -32,21 +33,15 @@ torch.manual_seed(42)
 # Create Data
 x = torch.rand(1000, 1)
 y = torch.sin(2 * torch.pi * x) + 0.1 * torch.randn_like(x)
-
-with plt.style.context(["science", "nature"]):
-    fig, ax = plt.subplots()
-    ax.plot(x, y, '.', markersize=3, markeredgewidth=0)
-    ax.set_xlabel("x")
-    ax.set_ylabel("y")
-    ax.autoscale(tight=True)
-    fig.savefig("mlp_data.png", dpi=600, bbox_inches="tight")
+ds = TensorDataset(x, y)
+dl = DataLoader(ds, batch_size=32, shuffle=True)
 
 # Parse Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--nodes", type=int, default=16)
 parser.add_argument("--layers", type=int, default=3)
 parser.add_argument("--lr", type=float, default=0.1)
-parser.add_argument("--epochs", type=int, default=1000)
+parser.add_argument("--epochs", type=int, default=300)
 args = parser.parse_args()
 
 # Create Model
@@ -75,13 +70,18 @@ y_gpu = y.to(device)
 optimizer = SGD(model.parameters(), lr=lr)
 loss_vec = []
 for epoch in range(epochs):
-    optimizer.zero_grad()
-    y_pred = model(x_gpu)
-    loss = F.mse_loss(y_pred, y_gpu)
-    loss_vec.append(loss.item())
-    loss.backward()
-    optimizer.step()
-    if epoch % 100 == 0:
+    loss_epoch = 0
+    for x_batch, y_batch in dl:
+        x_batch = x_batch.to(device)
+        y_batch = y_batch.to(device)
+        optimizer.zero_grad()
+        y_hat = model(x_batch)
+        loss = F.mse_loss(y_hat, y_batch)
+        loss_epoch += loss.item()
+        loss.backward()
+        optimizer.step()
+    loss_vec.append(loss_epoch / len(dl))
+    if epoch % 10 == 0:
         print(f"Epoch: {epoch}, Loss: {loss.item()}")
 
 # Plot Loss
