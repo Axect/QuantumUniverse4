@@ -18,9 +18,9 @@ class MLP(nn.Module):
         output = hparams["output"]
 
 
-        net = [nn.Linear(input, nodes), nn.ReLU()]
+        net = [nn.Linear(input, nodes), nn.GELU()]
         for _ in range(layers):
-            net.extend([nn.Linear(nodes, nodes), nn.ReLU()])
+            net.extend([nn.Linear(nodes, nodes), nn.GELU()])
         net.append(nn.Linear(nodes, output))
         self.net = nn.Sequential(*net)
 
@@ -109,7 +109,7 @@ with plt.style.context(["science", "nature"]):
     ax.plot(x_pred, y_pred.detach(), label="Predicted", color="red")
     ax.set_xlabel("x")
     ax.set_ylabel("y")
-    ax.set_title(f"Loss: {F.mse_loss(y_test, y_pred).item():.4e}")
+    ax.set_title(f"Loss: {F.mse_loss(y_pred, y_test).item():.4e}")
     ax.autoscale(tight=True)
     ax.legend()
     fig.savefig("mlp_preds.png", dpi=600, bbox_inches="tight")
