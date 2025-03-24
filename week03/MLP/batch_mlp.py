@@ -30,19 +30,20 @@ class MLP(nn.Module):
 # Set seed
 torch.manual_seed(42)
 
-# Create Data
-x = torch.rand(1000, 1)
-y = torch.sin(2 * torch.pi * x) + 0.1 * torch.randn_like(x)
-ds = TensorDataset(x, y)
-dl = DataLoader(ds, batch_size=32, shuffle=True)
-
 # Parse Arguments
 parser = argparse.ArgumentParser()
 parser.add_argument("--nodes", type=int, default=16)
 parser.add_argument("--layers", type=int, default=3)
 parser.add_argument("--lr", type=float, default=0.1)
 parser.add_argument("--epochs", type=int, default=300)
+parser.add_argument("--batch_size", type=int, default=32)
 args = parser.parse_args()
+
+# Create Data
+x = torch.rand(1000, 1)
+y = torch.sin(2 * torch.pi * x) + 0.1 * torch.randn_like(x)
+ds = TensorDataset(x, y)
+dl = DataLoader(ds, batch_size=args.batch_size, shuffle=True)
 
 # Create Model
 hparams = {
