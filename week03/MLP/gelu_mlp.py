@@ -40,7 +40,7 @@ parser.add_argument("--batch_size", type=int, default=32)
 args = parser.parse_args()
 
 # Create Data
-x = torch.rand(1000, 1)
+x = torch.rand(10000, 1)
 y = torch.sin(2 * torch.pi * x) + 0.1 * torch.randn_like(x)
 ds = TensorDataset(x, y)
 dl = DataLoader(ds, batch_size=args.batch_size, shuffle=True)
