@@ -5,9 +5,9 @@ use std::f64::consts::PI;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let mut rng = stdrng_from_seed(42);
-    let n = 200;
+    let n = 300;
     let x = linspace(0.0, 1.0, n);
-    let y = grf_with_rng(&mut rng, n, SquaredExponential(0.2));
+    let y = grf_with_rng(&mut rng, n, SquaredExponential(0.1));
     let normal = Normal(0.0, 0.2);
     let y_noisy = y.add_v(&normal.sample(n));
 
