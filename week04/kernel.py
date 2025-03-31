@@ -16,7 +16,7 @@ def gaussian(t):
   return (1 / np.sqrt(2 * np.pi)) * np.exp(-0.5 * t**2)
 
 # --- 데이터 생성 ---
-t = np.linspace(-2, 2, 500)
+t = np.linspace(-3, 3, 500)
 
 # 각 커널 함수에 대해 y값 계산
 y_epa = epanechnikov(t)
@@ -26,7 +26,7 @@ y_gauss = gaussian(t)
 # --- 그래프 그리기 ---
 plt.style.use(['science', 'nature'])
 
-fig, ax = plt.subplots(figsize=(6,4))
+fig, ax = plt.subplots(figsize=(5,2))
 
 ax.plot(t, y_epa, label='Epanechnikov')
 ax.plot(t, y_tri, label='Tri-cube')
