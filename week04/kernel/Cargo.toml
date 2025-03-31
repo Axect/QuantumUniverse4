@@ -1,0 +1,9 @@
+[package]
+name = "kernel"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+peroxide = { version = "0.39.3", features = ["parquet"] }
+rayon = "1.10.0"
+rugfield = "0.2.2"
