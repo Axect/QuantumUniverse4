@@ -44,3 +44,8 @@ uv pip install numpy torch matplotlib scienceplots torchinfo
 ![Regression](./regression_plot.png)
 
 ![Loss](./loss_plot.png)
+
+### `03_param_estim.py`
+
+![Parameter Estimation](./parameter_plot.png)
+![Loss](./parameter_loss_plot.png)
