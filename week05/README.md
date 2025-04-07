@@ -26,7 +26,7 @@ source .venv/bin/activate
 uv python install 3.13
 
 # Install dependencies
-uv pip install numpy torch matplotlib pandas pyarrow
+uv pip install numpy torch matplotlib scienceplots torchinfo
 ```
 
 ## Colab
@@ -34,3 +34,13 @@ uv pip install numpy torch matplotlib pandas pyarrow
 ### Open Colab
 
 - Open [Google Colab](https://colab.research.google.com/)
+
+---
+
+## Results
+
+### `02_regression.py`
+
+![Regression](./regression_plot.png)
+
+![Loss](./loss_plot.png)
