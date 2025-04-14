@@ -38,6 +38,7 @@ y_noisy = y_true + np.random.randn(num_data_points) * noise_level
 # Note: Tensors are NOT moved to device here; batches will be moved in the training loop.
 x_tensor = torch.tensor(x_data, dtype=torch.float32).unsqueeze(1)
 y_tensor = torch.tensor(y_noisy, dtype=torch.float32).unsqueeze(1)
+y_true_tensor = torch.tensor(y_true, dtype=torch.float32).unsqueeze(1)
 
 print(f"Generated {num_data_points} data points.")
 print(f"Input tensor shape: {x_tensor.shape}")
@@ -204,6 +205,8 @@ with torch.no_grad():
     #       Remember to move x_tensor to the device for prediction.
     predicted = model(x_tensor.to(device))
 
+true_loss = criterion(predicted, y_true_tensor.to(device))
+
 # HINT: Move predictions back to CPU and convert to NumPy for plotting.
 y_pred_numpy = predicted.cpu().numpy()
 
@@ -223,7 +226,7 @@ plt.plot(x_data, y_true, label='True Function', color='green', linewidth=2)
 plt.plot(x_data, y_pred_numpy, label='NN Prediction', color='red', linestyle='--', linewidth=2) # Use your prediction variable
 plt.xlabel("x")
 plt.ylabel("y")
-plt.title("Homework: Fitting Complex 1D Data")
+plt.title(f"Loss between True and Predicted: {true_loss.item():.4e}")
 plt.legend()
 plt.grid(True)
 plt.ylim(y_true.min() - 1, y_true.max() + 1)

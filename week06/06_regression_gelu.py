@@ -230,7 +230,7 @@ plt.title(f"Loss between True and Predicted: {true_loss.item():.4e}")
 plt.legend()
 plt.grid(True)
 plt.ylim(y_true.min() - 1, y_true.max() + 1)
-plt.savefig(f"fig_schedulers/regression_{hparams["nodes"]}_{hparams["layers"]}_{epochs}_{args.scheduler}.png", dpi=300, bbox_inches='tight')
+plt.savefig(f"fig_schedulers/regression_{hparams["nodes"]}_{hparams["layers"]}_{epochs}_{args.scheduler}_GELU.png", dpi=300, bbox_inches='tight')
 # plt.show()
 # print("Plotting results (placeholder).")
 
@@ -253,29 +253,6 @@ plt.ylim((2e-3, 2e-1))
 plt.title("Training Loss Curve")
 plt.legend()
 plt.grid(True)
-plt.savefig(f"fig_schedulers/loss_curve_{hparams["nodes"]}_{hparams["layers"]}_{epochs}_{args.scheduler}.png", dpi=300, bbox_inches='tight')
+plt.savefig(f"fig_schedulers/loss_curve_{hparams["nodes"]}_{hparams["layers"]}_{epochs}_{args.scheduler}_GELU.png", dpi=300, bbox_inches='tight')
 # plt.show()
 # print("Plotting loss curve (placeholder).")
-
-
-# ┌──────────────────────────────────────────────────────────┐
-#  8. LR Plot
-# └──────────────────────────────────────────────────────────┘
-plt.figure(figsize=(10, 6))
-plt.plot(lrs, label='Learning Rate')
-plt.xlabel("Epochs")
-plt.ylabel("Learning Rate")
-plt.yscale('log') # Optional: use log scale if loss drops quickly
-plt.title("Learning Rate Curve")
-plt.legend()
-plt.grid(True)
-plt.savefig(f"fig_schedulers/lr_curve_{hparams["nodes"]}_{hparams["layers"]}_{epochs}_{args.scheduler}.png", dpi=300)
-
-plt.figure(figsize=(10, 6))
-plt.plot(lrs, label='Learning Rate')
-plt.xlabel("Epochs")
-plt.ylabel("Learning Rate")
-plt.title("Learning Rate Curve")
-plt.legend()
-plt.grid(True)
-plt.savefig(f"fig_schedulers/lr_curve_linear_{hparams["nodes"]}_{hparams["layers"]}_{epochs}_{args.scheduler}.png", dpi=300)
