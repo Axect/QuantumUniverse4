@@ -26,31 +26,31 @@
 6. Click on the green "Create repository from template" button
 
 7. Clone the repository to your local machine
-  ```bash
-  git clone https://github.com/<your_username>/quantum_universe_template
-  ```
+   ```bash
+   git clone https://github.com/<your_username>/quantum_universe_template
+   ```
 
 8. Change directory to the cloned repository
-  ```bash
-  cd quantum_universe_template
-  ```
+   ```bash
+   cd quantum_universe_template
+   ```
 
 9. Install the required packages
-  ```bash
-  uv pip sync requirements.txt
+   ```bash
+   uv pip sync requirements.txt
 
-  # Or fresh install
-  uv pip install -U torch wandb rich beaupy polars numpy optuna matplotlib scienceplots
+   # Or fresh install
+   uv pip install -U torch wandb rich beaupy polars numpy optuna matplotlib scienceplots
 
-  # Or use pip (not recommended)
-  pip install -r requirements.txt
-  ```
+   # Or use pip (not recommended)
+   pip install -r requirements.txt
+   ```
 
 10. Activate the virtual environment
-  ```bash
-  # Linux or macOS
-  source .venv/bin/activate
+    ```bash
+    # Linux or macOS
+    source .venv/bin/activate
 
-  # Windows
-  .venv\Scripts\activate
-  ```
+    # Windows
+    .venv\Scripts\activate
+    ```
