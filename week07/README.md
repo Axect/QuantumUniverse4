@@ -1,0 +1,56 @@
+# PyTorch Template Tutorial
+
+## Prerequisites
+
+- Install [uv](https://docs.astral.sh/uv/)
+  ```bash
+  # Linux or macOS
+  curl -LsSf https://astral.sh/uv/install.sh | sh
+
+  # Windows
+  powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+  ```
+
+## Use template
+
+1. Go to [pytorch_template](https://github.com/Axect/pytorch_template)
+
+2. Click on the green "Use this template" button (upper right corner)
+
+3. Select "Create a new repository"
+
+4. Fill in the repository name and description (e.g. `quantum_universe_template`)
+
+5. Select the visibility (public or private)
+
+6. Click on the green "Create repository from template" button
+
+7. Clone the repository to your local machine
+  ```bash
+  git clone https://github.com/<your_username>/quantum_universe_template
+  ```
+
+8. Change directory to the cloned repository
+  ```bash
+  cd quantum_universe_template
+  ```
+
+9. Install the required packages
+  ```bash
+  uv pip sync requirements.txt
+
+  # Or fresh install
+  uv pip install -U torch wandb rich beaupy polars numpy optuna matplotlib scienceplots
+
+  # Or use pip (not recommended)
+  pip install -r requirements.txt
+  ```
+
+10. Activate the virtual environment
+  ```bash
+  # Linux or macOS
+  source .venv/bin/activate
+
+  # Windows
+  .venv\Scripts\activate
+  ```
