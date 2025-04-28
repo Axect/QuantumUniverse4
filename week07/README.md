@@ -37,12 +37,16 @@
 
 9. Install the required packages
    ```bash
+   # 1. Create a virtual environment
+   uv venv
+
+   # 2. Sync the requirements
    uv pip sync requirements.txt
 
-   # Or fresh install
+   # 2. Or fresh install
    uv pip install -U torch wandb rich beaupy polars numpy optuna matplotlib scienceplots
 
-   # Or use pip (not recommended)
+   # 1. Or use pip (not recommended)
    pip install -r requirements.txt
    ```
 
