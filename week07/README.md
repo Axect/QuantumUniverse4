@@ -19,7 +19,7 @@
 
 3. Select "Create a new repository"
 
-4. Fill in the repository name and description (e.g. `quantum_universe_template`)
+4. Fill in the repository name and description (e.g. `qu4_template_tutorial`)
 
 5. Select the visibility (public or private)
 
@@ -27,12 +27,12 @@
 
 7. Clone the repository to your local machine
    ```bash
-   git clone https://github.com/<your_username>/quantum_universe_template
+   git clone https://github.com/<your_username>/qu4_template_tutorial
    ```
 
 8. Change directory to the cloned repository
    ```bash
-   cd quantum_universe_template
+   cd qu4_template_tutorial
    ```
 
 9. Install the required packages
